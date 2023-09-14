@@ -12,7 +12,8 @@ class Solution{
 	public:
 	int perfectSum(int arr[], int n, int sum)
 	{
-        // Your code goes here
+        // 2-D vector used here 
+        // you can also create matrix using dp[n+1][sum+1]
      vector<vector<long long >>dp(n + 1 , vector<long long>(sum + 1 , 0));
      dp[0][0] = 1;
      
@@ -21,21 +22,17 @@ class Solution{
     
     for(int i=1;i<n+1;i++) {
         for(int j=0;j<sum+1;j++){
-            // not include the element 
-            if(arr[i - 1] > j)
-                {
-                    dp[i][j] = dp[i-1][j]%mod;
-                }
-            // include the element 
-                else
-                {
+            // include the element or not include appraoch 
+               if(arr[i-1] <= j){
                     dp[i][j] = (dp[i-1][j]%mod + dp[i-1][j-arr[i-1]]%mod)%mod;
+                }else{
+        
+                    dp[i][j] = dp[i-1][j]%mod;
                 }
         }
     }
-     return dp[n][sum];   
-	}
-	  
+     return dp[n][sum];  
+}	  
 };
 
 //{ Driver Code Starts.
